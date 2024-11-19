@@ -1,0 +1,707 @@
+//Version 15----> Replace all hash function for SHA2_HASH condition 
+void CROSS_sign_v15(const prikey_t *SK,
+               const char *const m,
+               const uint64_t mlen,
+               sig_t *sig){
+    /* Key material expansion */
+    FQ_ELEM V_tr[N-K][K];
+    FZ_ELEM eta[N];
+#if defined(RSDP)
+    expand_private_seed(eta,V_tr,SK->seed);
+#elif defined(RSDPG)
+    FZ_ELEM zeta[M];
+    FZ_ELEM W_tr[N-M][M];
+    expand_private_seed(eta,zeta,V_tr,W_tr,SK->seed);
+#endif
+
+    uint8_t root_seed[SEED_LENGTH_BYTES];
+    randombytes(root_seed,SEED_LENGTH_BYTES);
+    randombytes(sig->salt,SALT_LENGTH_BYTES);
+
+    uint8_t seed_tree[SEED_LENGTH_BYTES*NUM_NODES_OF_SEED_TREE];
+    generate_seed_tree_from_root(seed_tree,root_seed,sig->salt);
+    uint8_t * seed_tree_leaves = seed_tree +
+                                 SEED_LENGTH_BYTES*(NUM_LEAVES_OF_SEED_TREE-1);
+
+    FZ_ELEM eta_tilde[T][N];
+    //FZ_ELEM sigma[T][N];
+    FZ_ELEM sigma_new[N];
+    FQ_ELEM u_tilde[T][N];
+    FQ_ELEM s_tilde[N-K];
+
+#if defined(RSDP)
+    uint8_t cmt_0_i_input[sizeof(FQ_ELEM)*(N-K)+
+                          sizeof(FZ_ELEM)*N+
+                          SALT_LENGTH_BYTES+sizeof(uint16_t)];
+    const int offset_salt = sizeof(FQ_ELEM)*(N-K)+sizeof(FZ_ELEM)*N;
+    const int offset_round_idx = sizeof(FQ_ELEM)*(N-K)+sizeof(FZ_ELEM)*N+SALT_LENGTH_BYTES;
+#elif defined(RSDPG)
+    FZ_ELEM zeta_tilde[M];
+    FZ_ELEM delta[T][M];
+    uint8_t cmt_0_i_input[sizeof(FQ_ELEM)*(N-K)+
+                          sizeof(FZ_ELEM)*M+
+                          SALT_LENGTH_BYTES+sizeof(uint16_t)];
+    const int offset_salt = sizeof(FQ_ELEM)*(N-K)+sizeof(FZ_ELEM)*M;
+    const int offset_round_idx = sizeof(FQ_ELEM)*(N-K)+sizeof(FZ_ELEM)*M+SALT_LENGTH_BYTES;
+#endif
+
+    uint8_t cmt_1_i_input[SEED_LENGTH_BYTES+
+                          SALT_LENGTH_BYTES+sizeof(uint16_t)];
+
+    /* cmt_0_i_input is syndrome||sigma ||salt ; place salt at the end */
+    memcpy(cmt_0_i_input+offset_salt, sig->salt, SALT_LENGTH_BYTES);
+    /* cmt_1_i_input is seed[i]||salt */
+    memcpy(cmt_1_i_input+SEED_LENGTH_BYTES, sig->salt, SALT_LENGTH_BYTES);
+
+    // Added this lines (variables) for new hash functions
+    size_t i_new;
+    #if defined (SHA3_HASH)
+        uint64_t s[25], s1[25];
+        uint64_t dlen = 0, dlen1=0 ;
+        #if (HASH_DIGEST_LENGTH*8 == 256)
+            uint8_t r =SHA3_256_RATE;
+        #elif (HASH_DIGEST_LENGTH*8 == 384)
+            uint8_t r =SHA3_384_RATE;
+        #elif (HASH_DIGEST_LENGTH*8 == 512)
+            uint8_t r =SHA3_512_RATE;
+        #else
+            #error digest length unsupported by SHA-3
+        #endif
+        uint8_t cmt_1_new[r+HASH_DIGEST_LENGTH];
+        for (i_new = 0; i_new < 25; ++i_new) {
+            s[i_new] = 0;
+            s1[i_new] = 0;
+        }
+        for(i_new=0; i_new<r+HASH_DIGEST_LENGTH; i_new++){
+            cmt_1_new[i_new] = 0;
+        }
+        uint8_t *m_new=cmt_1_i_input;
+    #elif defined (SHA2_HASH)
+        uint8_t *m_new = cmt_1_i_input;
+        #if (HASH_DIGEST_LENGTH*8 == 256)
+            sha256ctx state;
+            uint64_t bytes;
+            uint64_t dlen = 0;
+            uint32_t state1[8];
+            #ifdef PROFILE_HASHING
+                uint64_t t0, t1;
+            #endif
+            //sha256(digest,m, mlen);
+        #elif (HASH_DIGEST_LENGTH*8 == 384)
+            sha384ctx state;
+            uint64_t bytes;
+            //sha384(cmt_0_new, cmt_0_i_input, sizeof(cmt_0_i_input));
+        #elif (HASH_DIGEST_LENGTH*8 == 512)
+            sha512ctx state;
+            uint64_t bytes;
+        #else
+            #error digest length unsupported by SHA-2
+        #endif
+        uint8_t cmt_1[T][HASH_DIGEST_LENGTH] = {0};    
+        //uint8_t *m_new1 = cmt_0_i_input;
+    #endif
+
+    //size_t i_new;
+    //uint64_t s[25];
+    //uint64_t dlen = 0;
+    //uint8_t cmt_0[T][HASH_DIGEST_LENGTH] = {0};
+    uint8_t cmt_0_new[HASH_DIGEST_LENGTH]={0};
+    //uint8_t cmt_1[T][HASH_DIGEST_LENGTH] = {0};
+   // uint8_t cmt_1_new[T][HASH_DIGEST_LENGTH] = {0};
+
+    //for (i_new = 0; i_new < 25; ++i_new) {
+      //  s[i_new] = 0;
+    //}
+    //uint8_t *m_new=cmt_1_i_input;
+    // New variables those use to make new merkle tree
+    unsigned int node_ctr, parent_layer;
+    uint8_t merkle_tree_0_new[NUM_NODES_OF_MERKLE_TREE * HASH_DIGEST_LENGTH];
+    //uint8_t merkle_tree_0[NUM_NODES_OF_MERKLE_TREE * HASH_DIGEST_LENGTH];
+    uint16_t merkle_leaf_indices[T];
+    uint16_t layer_offsets[LOGT+1];
+    uint16_t nodes_per_layer[LOGT+1];
+    setup_tree(layer_offsets, nodes_per_layer);
+    get_leaf_indices(merkle_leaf_indices, layer_offsets);
+    
+    CSPRNG_STATE_T CSPRNG_state;
+    uint8_t commit_digests[2][HASH_DIGEST_LENGTH];
+    for(int i = 0; i<T; i++){
+        uint8_t seed_u_t_seed_e_t[2*SEED_LENGTH_BYTES];
+        /* expand seed[i] into seed_e and seed_u */
+        initialize_csprng(&CSPRNG_state,
+                          seed_tree_leaves+SEED_LENGTH_BYTES*i,
+                          SEED_LENGTH_BYTES);
+        csprng_randombytes(seed_u_t_seed_e_t,
+                           2*SEED_LENGTH_BYTES,
+                           &CSPRNG_state);
+
+        /* expand eta_tilde */
+#if defined(RSDP)
+        initialize_csprng(&CSPRNG_state,
+                          seed_u_t_seed_e_t+SEED_LENGTH_BYTES,
+                          SEED_LENGTH_BYTES);
+        CSPRNG_zz_vec(eta_tilde[i], &CSPRNG_state);
+#elif defined(RSDPG)
+        initialize_csprng(&CSPRNG_state,
+                          seed_u_t_seed_e_t+SEED_LENGTH_BYTES,
+                          SEED_LENGTH_BYTES);
+        CSPRNG_zz_inf_w(zeta_tilde, &CSPRNG_state);
+        restr_inf_w_sub(delta[i], zeta,zeta_tilde);
+        fz_dz_norm_delta(delta[i]);
+
+        fz_inf_w_by_fz_matrix(eta_tilde[i],zeta_tilde,W_tr);
+        fz_dz_norm_sigma(eta_tilde[i]);
+#endif
+       // restr_vec_sub(sigma[i], eta,eta_tilde[i]);
+         restr_vec_sub(sigma_new, eta,eta_tilde[i]);
+        FQ_ELEM v[N];
+        //convert_restr_vec_to_fq(v,sigma[i]);
+        convert_restr_vec_to_fq(v,sigma_new);
+        //fz_dz_norm_sigma(sigma[i]);
+        fz_dz_norm_sigma(sigma_new);
+        /* expand u_tilde */
+        initialize_csprng(&CSPRNG_state,
+                          seed_u_t_seed_e_t,
+                          SEED_LENGTH_BYTES);
+        CSPRNG_fq_vec(u_tilde[i], &CSPRNG_state);
+
+        FQ_ELEM u[N];
+        fq_vec_by_fq_vec_pointwise(u,v,u_tilde[i]);
+        fq_vec_by_fq_matrix(s_tilde,u,V_tr);
+        fq_dz_norm_synd(s_tilde);
+
+        /* container for s-tilde, sigma_i and salt */
+        memcpy(cmt_0_i_input, s_tilde, sizeof(FQ_ELEM)*(N-K));
+        const int offset_sigma_delta = sizeof(FQ_ELEM)*(N-K);
+
+#if defined(RSDP)
+        //memcpy(cmt_0_i_input + offset_sigma_delta, sigma[i], sizeof(FZ_ELEM)*N);
+        memcpy(cmt_0_i_input + offset_sigma_delta, sigma_new, sizeof(FZ_ELEM)*N);
+#elif defined(RSDPG)
+        memcpy(cmt_0_i_input + offset_sigma_delta, delta[i], sizeof(FZ_ELEM)*M);
+#endif
+        /* Fixed endianness marshalling of round counter */
+        cmt_0_i_input[offset_round_idx] = (i >> 8) &0xFF;
+        cmt_0_i_input[offset_round_idx+1] = i & 0xFF;
+        
+        //hash(cmt_0_new,cmt_0_i_input,sizeof(cmt_0_i_input));
+        // hash_new(uint8_t* sig_new_digest_b, uint64_t* s, uint8_t* digest_b_buf_new, uint64_t* dlen, 
+//uint8_t* m_new, uint8_t r, int offset 
+//)
+        #if defined (SHA3_HASH)
+            m_new = cmt_0_i_input;
+            dlen = sizeof(cmt_0_i_input);
+            hash_new(cmt_0_new, s, cmt_0_i_input, &dlen, m_new, r, 1);
+            for (i_new = 0; i_new < 25; ++i_new) {
+                s[i_new] = 0;
+            }
+        #elif defined (SHA2_HASH)
+            #if (HASH_DIGEST_LENGTH*8 == 256)
+                //sha256ctx state;
+                sha256_inc_init(&state);
+                #ifdef PROFILE_HASHING
+                    t0 = hal_get_time();
+                #endif
+                bytes = load_bigendian_64(state.ctx + 32) + sizeof(cmt_0_i_input);
+                dlen = sizeof(cmt_0_i_input);
+                hash256_new_init(state1, &state); 
+                m_new = cmt_0_i_input;  
+                sha256_inc_finalize_new1(cmt_0_new, &state, state1, cmt_0_i_input, m_new, dlen, bytes, 1);
+                #ifdef PROFILE_HASHING
+                    t1 = hal_get_time();
+                    hash_cycles += (t1-t0);
+                #endif
+                //sha256(digest,m, mlen);
+            #elif (HASH_DIGEST_LENGTH*8 == 384)
+               // sha384ctx state;
+                sha384_inc_init(&state);
+                bytes = load_bigendian_64(state.ctx + 64) + sizeof(cmt_0_i_input);
+                sha384_inc_finalize_new(cmt_0_new, &state, cmt_0_i_input, sizeof(cmt_0_i_input), bytes, 1);
+                //sha384_inc_finalize(cmt_0_new, &state, cmt_0_i_input, sizeof(cmt_0_i_input));
+                //sha384(cmt_0_new, cmt_0_i_input, sizeof(cmt_0_i_input));
+            #elif (HASH_DIGEST_LENGTH*8 == 512)
+               // sha512ctx state;
+                sha512_inc_init(&state);
+                bytes = load_bigendian_64(state.ctx + 64) + sizeof(cmt_0_i_input);
+                sha512_inc_finalize_new(cmt_0_new, &state, cmt_0_i_input, sizeof(cmt_0_i_input), bytes, 1);
+                //sha512(cmt_0_new, cmt_0_i_input, sizeof(cmt_0_i_input));
+            #else
+            #error digest length unsupported by SHA-2
+            #endif
+            //hash(cmt_0_new, cmt_0_i_input, sizeof(cmt_0_i_input));
+        #endif
+
+        memcpy(merkle_tree_0_new + merkle_leaf_indices[i]*HASH_DIGEST_LENGTH, 
+                cmt_0_new,
+                HASH_DIGEST_LENGTH);
+        
+        memcpy(cmt_1_i_input,
+               seed_tree_leaves+SEED_LENGTH_BYTES*i,
+               SEED_LENGTH_BYTES);
+        cmt_1_i_input[SEED_LENGTH_BYTES+SALT_LENGTH_BYTES] = (i >> 8) &0xFF;
+        cmt_1_i_input[SEED_LENGTH_BYTES+SALT_LENGTH_BYTES+1] = i & 0xFF;        
+        //hash(cmt_1[i],cmt_1_i_input,sizeof(cmt_1_i_input));
+        #if defined (SHA3_HASH)
+            m_new = cmt_1_i_input;
+            dlen = sizeof(cmt_1_i_input);
+            hash_new(cmt_1_new+dlen1, s, cmt_1_i_input, &dlen, m_new, r, 1);
+            for (i_new = 0; i_new < 25; ++i_new) {
+                s[i_new] = 0;
+            }    
+            dlen1 += HASH_DIGEST_LENGTH;
+            if(dlen1>r && i!=T-1){
+                m_new = cmt_1_new;
+                hash_new(commit_digests[1], s1, cmt_1_new, &dlen1, m_new, r, 0);
+            }
+            if(i==T-1){
+                m_new = cmt_1_new;
+                hash_new(commit_digests[1], s1, cmt_1_new, &dlen1, m_new, r, 1);
+            }
+        #elif defined (SHA2_HASH)
+            #if (HASH_DIGEST_LENGTH*8 == 256)
+                //sha256ctx state;
+                sha256_inc_init(&state);
+                #ifdef PROFILE_HASHING
+                    t0 = hal_get_time();
+                #endif
+                dlen = sizeof(cmt_1_i_input);
+                bytes = load_bigendian_64(state.ctx + 32) + sizeof(cmt_1_i_input);
+                hash256_new_init(state1, &state);  
+                m_new = cmt_1_i_input; 
+                sha256_inc_finalize_new1(cmt_1[i], &state, state1, cmt_1_i_input, m_new, dlen, bytes, 1);
+                #ifdef PROFILE_HASHING
+                    t1 = hal_get_time();
+                    hash_cycles += (t1-t0);
+                #endif
+                //sha256_inc_finalize(cmt_1[i], &state, cmt_1_i_input, sizeof(cmt_1_i_input));
+                //sha256(digest,m, mlen);
+            #elif (HASH_DIGEST_LENGTH*8 == 384)
+               // sha384ctx state;
+                sha384_inc_init(&state);
+                bytes = load_bigendian_64(state.ctx + 64) + sizeof(cmt_1_i_input);
+                sha384_inc_finalize_new(cmt_1[i], &state, cmt_1_i_input, sizeof(cmt_1_i_input), bytes, 1);
+                //sha384_inc_finalize(cmt_1[i], &state, cmt_1_i_input, sizeof(cmt_1_i_input));
+                //sha384(cmt_0_new, cmt_0_i_input, sizeof(cmt_0_i_input));
+            #elif (HASH_DIGEST_LENGTH*8 == 512)
+               // sha512ctx state;
+                sha512_inc_init(&state);
+                bytes = load_bigendian_64(state.ctx + 64) + sizeof(cmt_1_i_input);
+                sha512_inc_finalize_new(cmt_1[i], &state, cmt_1_i_input, sizeof(cmt_1_i_input), bytes, 1);
+                //sha512_inc_finalize(cmt_1[i], &state, cmt_1_i_input, sizeof(cmt_1_i_input));
+                //sha512(cmt_0_new, cmt_0_i_input, sizeof(cmt_0_i_input));
+            #else
+                #error digest length unsupported by SHA-2
+            #endif
+            //hash(cmt_1[i], cmt_1_i_input, sizeof(cmt_1_i_input));
+        #endif    
+    }
+
+    /* vector containing d_0 and d_1 from spec */
+    //uint8_t commit_digests[2][HASH_DIGEST_LENGTH];
+   // uint8_t merkle_tree_0[NUM_NODES_OF_MERKLE_TREE * HASH_DIGEST_LENGTH];
+    node_ctr = 0;
+    parent_layer = LOGT-1;
+    uint8_t trial[HASH_DIGEST_LENGTH];
+
+    for (i_new=NUM_NODES_OF_MERKLE_TREE-1; i_new>0; i_new -= 2) {
+       //hash(merkle_tree_0_new + OFFSET(PARENT(i_new) + layer_offsets[parent_layer]), 
+       //merkle_tree_0_new + OFFSET(SIBLING(i_new)), 2*HASH_DIGEST_LENGTH);
+        #if defined (SHA3_HASH)
+            m_new = merkle_tree_0_new+OFFSET(SIBLING(i_new));
+            dlen = 2*HASH_DIGEST_LENGTH;
+            hash_new(merkle_tree_0_new + OFFSET(PARENT(i_new) + layer_offsets[parent_layer]), s,
+            merkle_tree_0_new + OFFSET(SIBLING(i_new)), &dlen, m_new, r, 1);
+            
+            /*for (int i = 0; i < HASH_DIGEST_LENGTH; i++) {
+                if((merkle_tree_0 + OFFSET(PARENT(i_new) + layer_offsets[parent_layer]))[i]!=
+                (merkle_tree_0_new + OFFSET(PARENT(i_new) + layer_offsets[parent_layer]))[i])
+                    printf("Error at %d %ld\n",i, i_new);
+            }*/
+            for (int i = 0; i < 25; ++i) {
+                s[i] = 0;
+            }
+        #elif defined (SHA2_HASH)
+            #if (HASH_DIGEST_LENGTH*8 == 256)
+                //sha256ctx state;
+                sha256_inc_init(&state);
+                #ifdef PROFILE_HASHING
+                    t0 = hal_get_time();
+                #endif
+                bytes = load_bigendian_64(state.ctx + 32) + 2*HASH_DIGEST_LENGTH;
+                hash256_new_init(state1, &state);  
+                dlen = 2*HASH_DIGEST_LENGTH;
+                m_new =  merkle_tree_0_new+OFFSET(SIBLING(i_new));
+                sha256_inc_finalize_new1(merkle_tree_0_new + OFFSET(PARENT(i_new) + layer_offsets[parent_layer]), 
+                &state, state1, merkle_tree_0_new+OFFSET(SIBLING(i_new)), m_new, dlen, bytes, 1);
+                #ifdef PROFILE_HASHING
+                    t1 = hal_get_time();
+                    hash_cycles += (t1-t0);
+                #endif
+               // sha256_inc_finalize(merkle_tree_0_new + OFFSET(PARENT(i_new) + layer_offsets[parent_layer]), &state, 
+                //merkle_tree_0_new+OFFSET(SIBLING(i_new)), 2*HASH_DIGEST_LENGTH);
+                //sha256(digest,m, mlen);
+            #elif (HASH_DIGEST_LENGTH*8 == 384)
+               // sha384ctx state;
+                sha384_inc_init(&state);
+                bytes = load_bigendian_64(state.ctx + 64) + 2*HASH_DIGEST_LENGTH;
+                sha384_inc_finalize_new(merkle_tree_0_new + OFFSET(PARENT(i_new) + layer_offsets[parent_layer]), &state, 
+                merkle_tree_0_new+OFFSET(SIBLING(i_new)), 2*HASH_DIGEST_LENGTH, bytes, 1);
+                
+                //sha384_inc_finalize(merkle_tree_0_new + OFFSET(PARENT(i_new) + layer_offsets[parent_layer]), &state, 
+                //merkle_tree_0_new+OFFSET(SIBLING(i_new)), 2*HASH_DIGEST_LENGTH);
+                //sha384(cmt_0_new, cmt_0_i_input, sizeof(cmt_0_i_input));
+            #elif (HASH_DIGEST_LENGTH*8 == 512)
+               // sha512ctx state;
+                sha512_inc_init(&state);
+                bytes = load_bigendian_64(state.ctx + 64) + 2*HASH_DIGEST_LENGTH;
+                sha512_inc_finalize_new(merkle_tree_0_new + OFFSET(PARENT(i_new) + layer_offsets[parent_layer]), &state, 
+                merkle_tree_0_new+OFFSET(SIBLING(i_new)), 2*HASH_DIGEST_LENGTH, bytes, 1);
+                //sha512_inc_finalize(merkle_tree_0_new + OFFSET(PARENT(i_new) + layer_offsets[parent_layer]), &state, 
+                //merkle_tree_0_new+OFFSET(SIBLING(i_new)), 2*HASH_DIGEST_LENGTH);
+                //sha512(cmt_0_new, cmt_0_i_input, sizeof(cmt_0_i_input));
+            #else
+                #error digest length unsupported by SHA-2
+            #endif
+            //hash(merkle_tree_0_new + OFFSET(PARENT(i_new) + layer_offsets[parent_layer]), merkle_tree_0_new+OFFSET(SIBLING(i_new)),
+            //2*HASH_DIGEST_LENGTH);
+        #endif        
+        if (node_ctr >= nodes_per_layer[parent_layer+1] - 2) {
+            parent_layer--;
+            node_ctr = 0;
+        } else {
+                node_ctr += 2;
+        }
+    }
+    memcpy(commit_digests[0], merkle_tree_0_new, HASH_DIGEST_LENGTH);
+    //merkle_tree_root_compute(commit_digests[0], merkle_tree_0, cmt_0);
+    //hash(commit_digests[1], (unsigned char*)cmt_1, sizeof(cmt_1));
+    /*#if defined (SHA3_HASH)
+        m_new = (unsigned char*)cmt_1;
+        dlen = sizeof(cmt_1);
+        hash_new(commit_digests[1], s, (unsigned char*)cmt_1, &dlen, m_new, r, 1);
+        for (int i = 0; i < 25; ++i) {
+            s[i] = 0;
+        }
+    #elif defined (SHA2_HASH)
+    #endif*/
+    //hash(sig->digest_01, (unsigned char*) commit_digests, sizeof(commit_digests));
+    #if defined (SHA3_HASH)
+        m_new = commit_digests;
+        dlen = sizeof(commit_digests);
+        hash_new(sig->digest_01, s, (unsigned char*) commit_digests, &dlen, m_new, r, 1);
+        for (int i = 0; i < 25; ++i) {
+            s[i] = 0;
+        }
+    #elif defined (SHA2_HASH)
+        #if (HASH_DIGEST_LENGTH*8 == 256)
+            //sha256ctx state;
+            sha256_inc_init(&state);
+            #ifdef PROFILE_HASHING
+                t0 = hal_get_time();
+            #endif
+            bytes = load_bigendian_64(state.ctx + 32) + sizeof(cmt_1);
+            hash256_new_init(state1, &state);   
+            m_new = (unsigned char*)cmt_1;
+            dlen = sizeof(cmt_1);
+            sha256_inc_finalize_new1(commit_digests[1], &state, state1, (unsigned char*)cmt_1, m_new, dlen, bytes, 1);
+            #ifdef PROFILE_HASHING
+                t1 = hal_get_time();
+                hash_cycles += (t1-t0);
+            #endif
+            //sha256_inc_finalize(commit_digests[1], &state, (unsigned char*)cmt_1, sizeof(cmt_1));
+            sha256_inc_init(&state);
+            #ifdef PROFILE_HASHING
+                t0 = hal_get_time();
+            #endif
+            bytes = load_bigendian_64(state.ctx + 32) + sizeof(commit_digests);
+            hash256_new_init(state1, &state);
+            dlen = sizeof(commit_digests);
+            m_new = (unsigned char*)commit_digests;
+            sha256_inc_finalize_new1(sig->digest_01, &state, state1, (unsigned char*)commit_digests, m_new, dlen, bytes, 1);
+            #ifdef PROFILE_HASHING
+                t1 = hal_get_time();
+                hash_cycles += (t1-t0);
+            #endif
+            //sha256_inc_finalize(sig->digest_01, &state, (unsigned char*)commit_digests, sizeof(commit_digests));
+            //sha256(digest,m, mlen);
+        #elif (HASH_DIGEST_LENGTH*8 == 384)
+            // sha384ctx state;
+            sha384_inc_init(&state);
+            bytes = load_bigendian_64(state.ctx + 64) + sizeof(cmt_1);
+            sha384_inc_finalize_new(commit_digests[1], &state, (unsigned char*)cmt_1, sizeof(cmt_1), bytes, 1);
+            //sha384_inc_finalize(commit_digests[1], &state, (unsigned char*)cmt_1, sizeof(cmt_1));
+            sha384_inc_init(&state);
+            bytes = load_bigendian_64(state.ctx + 64) + sizeof(commit_digests);
+            sha384_inc_finalize_new(sig->digest_01, &state, (unsigned char*)commit_digests, sizeof(commit_digests), bytes, 1);
+            //sha384_inc_finalize(sig->digest_01, &state, (unsigned char*)commit_digests, sizeof(commit_digests));
+            //sha384(cmt_0_new, cmt_0_i_input, sizeof(cmt_0_i_input));
+        #elif (HASH_DIGEST_LENGTH*8 == 512)
+            // sha512ctx state;
+            sha512_inc_init(&state);
+            bytes = load_bigendian_64(state.ctx + 64) + sizeof(cmt_1);
+            sha512_inc_finalize_new(commit_digests[1], &state, (unsigned char*)cmt_1, sizeof(cmt_1), bytes, 1);
+                
+            //sha512_inc_finalize(commit_digests[1], &state, (unsigned char*)cmt_1, sizeof(cmt_1));
+            sha512_inc_init(&state);
+            bytes = load_bigendian_64(state.ctx + 64) + sizeof(commit_digests);
+            sha512_inc_finalize_new(sig->digest_01, &state, (unsigned char*)commit_digests, sizeof(commit_digests), bytes, 1);
+                
+            //sha512_inc_finalize(sig->digest_01, &state, (unsigned char*)commit_digests, sizeof(commit_digests));
+            //sha512(cmt_0_new, cmt_0_i_input, sizeof(cmt_0_i_input));
+        #else
+            #error digest length unsupported by SHA-2
+        #endif
+        //hash(commit_digests[1], (unsigned char*)cmt_1, sizeof(cmt_1));
+        //hash(sig->digest_01, (unsigned char*)commit_digests, sizeof(commit_digests));
+    #endif    
+    /* first challenge extraction */
+    uint8_t beta_buf[2*HASH_DIGEST_LENGTH+SALT_LENGTH_BYTES];
+    /* place d_m at the beginning of the input of the hash generating d_beta*/
+    //hash(beta_buf,(uint8_t*) m,mlen);
+    #if defined (SHA3_HASH)
+        m_new = m;
+        dlen = mlen;
+        hash_new(beta_buf, s, (uint8_t*) m, &dlen, m_new, r, 1);
+        for (int i = 0; i < 25; ++i) {
+            s[i] = 0;
+        }
+    #elif defined (SHA2_HASH)
+        #if (HASH_DIGEST_LENGTH*8 == 256)
+            //sha256ctx state;
+            sha256_inc_init(&state);
+            #ifdef PROFILE_HASHING
+                t0 = hal_get_time();
+            #endif
+            bytes = load_bigendian_64(state.ctx + 32) + mlen;
+            hash256_new_init(state1, &state);  
+            m_new =  (unsigned char*)m;
+            dlen = mlen;
+            sha256_inc_finalize_new1(beta_buf, &state, state1, (unsigned char*)m, m_new, dlen, bytes, 1);
+            #ifdef PROFILE_HASHING
+                t1 = hal_get_time();
+                hash_cycles += (t1-t0);
+            #endif
+            //sha256_inc_finalize(beta_buf, &state, (uint8_t*)m, mlen);
+            //sha256(digest,m, mlen);
+        #elif (HASH_DIGEST_LENGTH*8 == 384)
+            // sha384ctx state;
+            sha384_inc_init(&state);
+            bytes = load_bigendian_64(state.ctx + 64) + mlen;
+            sha384_inc_finalize_new(beta_buf, &state,(uint8_t*)m, mlen, bytes, 1);
+            //sha384_inc_finalize(beta_buf, &state, (uint8_t*)m, mlen);
+            //sha384(cmt_0_new, cmt_0_i_input, sizeof(cmt_0_i_input));
+        #elif (HASH_DIGEST_LENGTH*8 == 512)
+            // sha512ctx state;
+            sha512_inc_init(&state);
+            bytes = load_bigendian_64(state.ctx + 64) + mlen;
+            sha512_inc_finalize_new(beta_buf, &state,(uint8_t*)m, mlen, bytes, 1);
+                
+            //sha512_inc_finalize(beta_buf, &state, (uint8_t*)m, mlen);
+            //sha512(cmt_0_new, cmt_0_i_input, sizeof(cmt_0_i_input));
+        #else
+            #error digest length unsupported by SHA-2
+        #endif    
+        //hash(beta_buf, (uint8_t*)m, mlen);
+    #endif    
+    
+    memcpy(beta_buf+HASH_DIGEST_LENGTH, sig->digest_01, HASH_DIGEST_LENGTH);
+    memcpy(beta_buf+2*HASH_DIGEST_LENGTH, sig->salt, SALT_LENGTH_BYTES);
+
+    uint8_t d_beta[HASH_DIGEST_LENGTH];
+    //hash(d_beta,beta_buf,2*HASH_DIGEST_LENGTH+SALT_LENGTH_BYTES);
+    #if defined (SHA3_HASH)
+        m_new = beta_buf;
+        dlen = 2*HASH_DIGEST_LENGTH+SALT_LENGTH_BYTES;
+        hash_new(d_beta, s, beta_buf, &dlen, m_new, r, 1);
+        for (int i = 0; i < 25; ++i) {
+            s[i] = 0;
+        }
+    #elif defined (SHA2_HASH)
+        #if (HASH_DIGEST_LENGTH*8 == 256)
+            //sha256ctx state;
+            sha256_inc_init(&state);
+            #ifdef PROFILE_HASHING
+                t0 = hal_get_time();
+            #endif
+            bytes = load_bigendian_64(state.ctx + 32) + 2*HASH_DIGEST_LENGTH+SALT_LENGTH_BYTES;
+            hash256_new_init(state1, &state); 
+            dlen = 2*HASH_DIGEST_LENGTH+SALT_LENGTH_BYTES;
+            m_new = beta_buf;  
+            sha256_inc_finalize_new1(d_beta, &state, state1, beta_buf, m_new, dlen, bytes, 1);
+            #ifdef PROFILE_HASHING
+                t1 = hal_get_time();
+                hash_cycles += (t1-t0);
+            #endif
+            //sha256_inc_finalize(d_beta, &state, beta_buf, 2*HASH_DIGEST_LENGTH+SALT_LENGTH_BYTES);
+            //sha256(digest,m, mlen);
+        #elif (HASH_DIGEST_LENGTH*8 == 384)
+            // sha384ctx state;
+            sha384_inc_init(&state);
+            bytes = load_bigendian_64(state.ctx + 64) + 2*HASH_DIGEST_LENGTH+SALT_LENGTH_BYTES;
+            sha384_inc_finalize_new(d_beta, &state, beta_buf, 2*HASH_DIGEST_LENGTH+SALT_LENGTH_BYTES, bytes, 1);
+            //sha384_inc_finalize(d_beta, &state, beta_buf, 2*HASH_DIGEST_LENGTH+SALT_LENGTH_BYTES);
+            //sha384(cmt_0_new, cmt_0_i_input, sizeof(cmt_0_i_input));
+        #elif (HASH_DIGEST_LENGTH*8 == 512)
+            // sha512ctx state;
+            sha512_inc_init(&state);
+            bytes = load_bigendian_64(state.ctx + 64) + 2*HASH_DIGEST_LENGTH+SALT_LENGTH_BYTES;
+            sha512_inc_finalize_new(d_beta, &state, beta_buf, 2*HASH_DIGEST_LENGTH+SALT_LENGTH_BYTES, bytes, 1);
+                
+            //sha512_inc_finalize(d_beta, &state, beta_buf, 2*HASH_DIGEST_LENGTH+SALT_LENGTH_BYTES);
+            //sha512(cmt_0_new, cmt_0_i_input, sizeof(cmt_0_i_input));
+        #else
+            #error digest length unsupported by SHA-2
+        #endif    
+        //hash(d_beta, beta_buf, 2*HASH_DIGEST_LENGTH+SALT_LENGTH_BYTES);
+    #endif    
+
+    FQ_ELEM beta[T];
+    initialize_csprng(&CSPRNG_state,d_beta,HASH_DIGEST_LENGTH);
+    CSPRNG_fq_vec_beta(beta, &CSPRNG_state);
+
+    /* Computation of the first round of responses */
+    //FQ_ELEM y[T][N];
+    #if defined (SHA3_HASH)
+        uint8_t digest_b_buf[N*sizeof(FQ_ELEM)+r];   
+        dlen = 0; 
+    #elif defined (SHA2_HASH)
+        uint8_t digest_b_buf[T*N*sizeof(FQ_ELEM)+HASH_DIGEST_LENGTH];
+    #endif
+    for(int i = 0; i < T; i++){
+        fq_vec_by_restr_vec_scaled(u_tilde[i],
+                                   eta_tilde[i],
+                                   beta[i],
+                                   u_tilde[i]);
+        fq_dz_norm(u_tilde[i]);
+
+        #if defined (SHA3_HASH)
+            memcpy(digest_b_buf+dlen, u_tilde[i], N*sizeof(FQ_ELEM));    
+            m_new = digest_b_buf;
+            dlen += N*sizeof(FQ_ELEM);
+            if(dlen> r)
+                hash_new(sig->digest_b, s, digest_b_buf, &dlen, m_new, r, 0);
+            if(i==T-1){
+                memcpy(digest_b_buf+dlen, d_beta, HASH_DIGEST_LENGTH);
+                dlen+=HASH_DIGEST_LENGTH;
+                m_new = digest_b_buf;
+                hash_new(sig->digest_b, s, digest_b_buf, &dlen, m_new, r, 1);
+                for (i_new = 0; i_new < 25; ++i_new) {
+                    s[i_new] = 0;
+                }    
+            }
+    #elif defined (SHA2_HASH)
+    #endif    
+
+        /*fq_vec_by_restr_vec_scaled(y[i],
+                                   eta_tilde[i],
+                                   beta[i],
+                                   u_tilde[i]);
+        fq_dz_norm(y[i]);*/
+    }
+
+    /* Second challenge extraction */
+    #if defined (SHA2_HASH)
+  //  uint8_t digest_b_buf[T*N*sizeof(FQ_ELEM)+HASH_DIGEST_LENGTH];
+    //memcpy(digest_b_buf,y,T*N*sizeof(FQ_ELEM));
+        memcpy(digest_b_buf,u_tilde,T*N*sizeof(FQ_ELEM));
+        memcpy(digest_b_buf+T*N*sizeof(FQ_ELEM),d_beta,HASH_DIGEST_LENGTH);
+        #if (HASH_DIGEST_LENGTH*8 == 256)
+            //sha256ctx state;
+            sha256_inc_init(&state);
+            #ifdef PROFILE_HASHING
+                t0 = hal_get_time();
+            #endif
+            bytes = load_bigendian_64(state.ctx + 32) + sizeof(digest_b_buf);
+            hash256_new_init(state1, &state); 
+            dlen = sizeof(digest_b_buf);
+            m_new = digest_b_buf;  
+            sha256_inc_finalize_new1(sig->digest_b, &state, state1, digest_b_buf, m_new, dlen, bytes, 1);
+            #ifdef PROFILE_HASHING
+                t1 = hal_get_time();
+                hash_cycles += (t1-t0);
+            #endif
+
+            //sha256_inc_finalize(sig->digest_b, &state, digest_b_buf, sizeof(digest_b_buf));
+            //sha256(digest,m, mlen);
+        #elif (HASH_DIGEST_LENGTH*8 == 384)
+            // sha384ctx state;
+            sha384_inc_init(&state);
+            bytes = load_bigendian_64(state.ctx + 64) + sizeof(digest_b_buf);
+            sha384_inc_finalize_new(sig->digest_b, &state, digest_b_buf, sizeof(digest_b_buf), bytes, 1);
+    
+            //sha384_inc_finalize(sig->digest_b, &state, digest_b_buf, sizeof(digest_b_buf));
+            //sha384(cmt_0_new, cmt_0_i_input, sizeof(cmt_0_i_input));
+        #elif (HASH_DIGEST_LENGTH*8 == 512)
+            // sha512ctx state;
+            sha512_inc_init(&state);
+            bytes = load_bigendian_64(state.ctx + 64) + sizeof(digest_b_buf);
+            sha512_inc_finalize_new(sig->digest_b, &state, digest_b_buf, sizeof(digest_b_buf), bytes, 1);
+            //sha512_inc_finalize(sig->digest_b, &state, digest_b_buf, sizeof(digest_b_buf));
+            //sha512(cmt_0_new, cmt_0_i_input, sizeof(cmt_0_i_input));
+        #else
+            #error digest length unsupported by SHA-2
+        #endif
+        //hash(sig->digest_b, digest_b_buf, sizeof(digest_b_buf));
+    #endif
+    /*#if defined (SHA3_HASH)
+        m_new = digest_b_buf;
+        dlen = sizeof(digest_b_buf);
+        hash_new(sig->digest_b, s, digest_b_buf, &dlen, m_new, r, 1);
+        for (int i = 0; i < 25; ++i) {
+            s[i] = 0;
+        }
+    #elif defined (SHA2_HASH)
+    #endif*/    
+
+    uint8_t fixed_weight_b[T]={0};
+    /*since w > t-w, we generate a weight t-w string and flip the contents  */
+    expand_digest_to_fixed_weight(fixed_weight_b,sig->digest_b);
+    for(int i = 0; i<T; i++){
+        fixed_weight_b[i] = !fixed_weight_b[i];
+    }
+
+    /* Computation of the second round of responses */
+    uint16_t mtp_len;
+    merkle_tree_proof_compute_new(sig->mtp,&mtp_len,merkle_tree_0_new,fixed_weight_b);
+    publish_seeds(sig->stp,seed_tree,fixed_weight_b);
+
+    int published_rsps = 0;
+    for(int i = 0; i<T; i++){
+        if(fixed_weight_b[i] == 0){
+            assert(published_rsps < T-W);
+           // pack_fq_vec(sig->rsp_0[published_rsps].y, y[i]);
+            pack_fq_vec(sig->rsp_0[published_rsps].y, u_tilde[i]);
+#if defined(RSDP)
+            restr_vec_sub(sigma_new, eta,eta_tilde[i]);
+            fz_dz_norm_sigma(sigma_new);
+            pack_fz_vec(sig->rsp_0[published_rsps].sigma, sigma_new);
+          //  pack_fz_vec(sig->rsp_0[published_rsps].sigma, sigma[i]);
+#elif defined(RSDPG)
+            pack_fz_rsdp_g_vec(sig->rsp_0[published_rsps].delta, delta[i]);
+#endif
+            memcpy(cmt_1_i_input+SEED_LENGTH_BYTES, sig->salt, SALT_LENGTH_BYTES);
+            memcpy(cmt_1_i_input,
+            seed_tree_leaves+SEED_LENGTH_BYTES*i,
+                SEED_LENGTH_BYTES);
+            cmt_1_i_input[SEED_LENGTH_BYTES+SALT_LENGTH_BYTES] = (i >> 8) &0xFF;
+            cmt_1_i_input[SEED_LENGTH_BYTES+SALT_LENGTH_BYTES+1] = i & 0xFF;
+
+            #if defined (SHA3_HASH)
+                m_new = cmt_1_i_input;
+                dlen = sizeof(cmt_1_i_input);
+                for (i_new = 0; i_new < 25; ++i_new) {
+                    s[i_new] = 0;
+                }
+                hash_new(cmt_1_new, s, cmt_1_i_input, &dlen, m_new, r, 1); 
+                memcpy(sig->rsp_1[published_rsps], cmt_1_new, HASH_DIGEST_LENGTH);
+                published_rsps++;   
+            #elif defined (SHA2_HASH)
+                memcpy(sig->rsp_1[published_rsps], cmt_1[i], HASH_DIGEST_LENGTH);
+                published_rsps++;  
+            #endif
+            
+            //published_rsps++;
+        }
+    }
+}
+

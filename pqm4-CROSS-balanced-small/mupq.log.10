@@ -1,0 +1,299 @@
+2024-11-16 18:46:48,111 BoardTestCase INFO: Benchmarking cross-sha3-r-sdp-3-balance - ref
+2024-11-16 18:46:48,111 BoardTestCase INFO: Runnning cross-sha3-r-sdp-3-balance - ref - stack
+2024-11-16 18:46:48,111 Implementation INFO: Building cross-sha3-r-sdp-3-balance - ref - stack
+2024-11-16 18:47:03,802 Implementation DEBUG: make stdout output:
+GEN     obj/.config.mk
+make -C /home/puja/Videos/pqm4-CROSS-24October24Main_Hash_reuse_recompute_merkle/libopencm3 lib/stm32/l4
+make[1]: Entering directory '/home/puja/Videos/pqm4-CROSS-24October24Main_Hash_reuse_recompute_merkle/libopencm3'
+  GENHDR  stm32/f0
+  GENHDR  stm32/f1
+  GENHDR  stm32/f2
+  GENHDR  stm32/f3
+  GENHDR  stm32/f4
+  GENHDR  stm32/f7
+  GENHDR  stm32/l0
+  GENHDR  stm32/l1
+  GENHDR  stm32/l4
+  GENHDR  stm32/g0
+  GENHDR  stm32/g4
+  GENHDR  stm32/h7
+  GENHDR  gd32/f1x0
+  GENHDR  lpc13xx
+  GENHDR  lpc17xx
+  GENHDR  lpc43xx/m4
+  GENHDR  lpc43xx/m0
+  GENHDR  lm3s
+  GENHDR  msp432/e4
+  GENHDR  efm32/tg
+  GENHDR  efm32/g
+  GENHDR  efm32/lg
+  GENHDR  efm32/gg
+  GENHDR  efm32/hg
+  GENHDR  efm32/wg
+  GENHDR  efm32/ezr32wg
+  GENHDR  nrf/51
+  GENHDR  nrf/52
+  GENHDR  sam/3a
+  GENHDR  sam/3n
+  GENHDR  sam/3s
+  GENHDR  sam/3u
+  GENHDR  sam/3x
+  GENHDR  sam/4l
+  GENHDR  sam/d
+  GENHDR  vf6xx
+  GENHDR  swm050
+  GENHDR  pac55xx
+  BUILD   lib/stm32/l4
+  CC      adc.c
+  CC      adc_common_v2.c
+  CC      adc_common_v2_multi.c
+  CC      can.c
+  CC      crc_common_all.c
+  CC      crc_v2.c
+  CC      crs_common_all.c
+  CC      dac_common_all.c
+  CC      dac_common_v1.c
+  CC      dma_common_l1f013.c
+  CC      dma_common_csel.c
+  CC      exti_common_all.c
+  CC      flash.c
+  CC      flash_common_all.c
+  CC      flash_common_f.c
+  CC      flash_common_idcache.c
+  CC      gpio_common_all.c
+  CC      gpio_common_f0234.c
+  CC      i2c_common_v2.c
+  CC      iwdg_common_all.c
+  CC      lptimer_common_all.c
+  CC      pwr.c
+  CC      rcc.c
+  CC      rcc_common_all.c
+  CC      rng_common_v1.c
+  CC      rtc_common_l1f024.c
+  CC      spi_common_all.c
+  CC      spi_common_v2.c
+  CC      timer_common_all.c
+  CC      usart_common_all.c
+  CC      usart_common_v2.c
+  CC      quadspi_common_v1.c
+  CC      usb.c
+  CC      usb_control.c
+  CC      usb_standard.c
+  CC      usb_msc.c
+  CC      usb_hid.c
+  CC      usb_audio.c
+  CC      usb_cdc.c
+  CC      usb_midi.c
+  CC      st_usbfs_core.c
+  CC      st_usbfs_v2.c
+  CC      usb_dwc_common.c
+  CC      usb_f107.c
+  CC      vector.c
+  CC      systick.c
+  CC      scb.c
+  CC      nvic.c
+  CC      assert.c
+  CC      sync.c
+  CC      dwt.c
+  AR      libopencm3_stm32l4.a
+make[1]: Leaving directory '/home/puja/Videos/pqm4-CROSS-24October24Main_Hash_reuse_recompute_merkle/libopencm3'
+  CC      elf/mupq_crypto_sign_cross-sha3-r-sdp-3-balance_ref_stack.elf
+  OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdp-3-balance_ref_stack.hex
+2024-11-16 18:47:07,374 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-16 18:47:09,442 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-5-balance - ref
+2024-11-16 18:47:09,442 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-5-balance - ref - stack
+2024-11-16 18:47:09,443 Implementation INFO: Building cross-sha3-r-sdpg-5-balance - ref - stack
+2024-11-16 18:47:17,979 Implementation DEBUG: make stdout output:
+CC      elf/mupq_crypto_sign_cross-sha3-r-sdpg-5-balance_ref_stack.elf
+  OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-5-balance_ref_stack.hex
+2024-11-16 18:47:21,535 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-16 18:47:23,349 BoardTestCase INFO: Benchmarking cross-sha3-r-sdp-1-balance - ref
+2024-11-16 18:47:23,350 BoardTestCase INFO: Runnning cross-sha3-r-sdp-1-balance - ref - stack
+2024-11-16 18:47:23,352 Implementation INFO: Building cross-sha3-r-sdp-1-balance - ref - stack
+2024-11-16 18:47:29,969 Implementation DEBUG: make stdout output:
+CC      elf/mupq_crypto_sign_cross-sha3-r-sdp-1-balance_ref_stack.elf
+  OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdp-1-balance_ref_stack.hex
+2024-11-16 18:47:33,377 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-16 18:47:34,376 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-3-balance - ref
+2024-11-16 18:47:34,377 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-3-balance - ref - stack
+2024-11-16 18:47:34,377 Implementation INFO: Building cross-sha3-r-sdpg-3-balance - ref - stack
+2024-11-16 18:47:41,339 Implementation DEBUG: make stdout output:
+CC      elf/mupq_crypto_sign_cross-sha3-r-sdpg-3-balance_ref_stack.elf
+  OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-3-balance_ref_stack.hex
+2024-11-16 18:47:44,808 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-16 18:47:45,764 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-1-balance - ref
+2024-11-16 18:47:45,764 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-1-balance - ref - stack
+2024-11-16 18:47:45,765 Implementation INFO: Building cross-sha3-r-sdpg-1-balance - ref - stack
+2024-11-16 18:47:52,946 Implementation DEBUG: make stdout output:
+CC      elf/mupq_crypto_sign_cross-sha3-r-sdpg-1-balance_ref_stack.elf
+  OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-1-balance_ref_stack.hex
+2024-11-16 18:47:56,568 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-16 18:47:57,320 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-1-small - ref
+2024-11-16 18:47:57,320 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-1-small - ref - stack
+2024-11-16 18:47:57,321 Implementation INFO: Building cross-sha3-r-sdpg-1-small - ref - stack
+2024-11-16 18:48:04,225 Implementation DEBUG: make stdout output:
+CC      elf/mupq_crypto_sign_cross-sha3-r-sdpg-1-small_ref_stack.elf
+  OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-1-small_ref_stack.hex
+2024-11-16 18:48:07,771 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-16 18:48:10,231 BoardTestCase INFO: Benchmarking cross-sha3-r-sdp-3-balance - ref
+2024-11-16 18:48:10,231 BoardTestCase INFO: Runnning cross-sha3-r-sdp-3-balance - ref - speed
+2024-11-16 18:48:10,231 Implementation INFO: Building cross-sha3-r-sdp-3-balance - ref - speed
+2024-11-16 18:48:16,850 Implementation DEBUG: make stdout output:
+CC      elf/mupq_crypto_sign_cross-sha3-r-sdp-3-balance_ref_speed.elf
+  OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdp-3-balance_ref_speed.hex
+2024-11-16 18:48:20,927 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-16 18:48:27,747 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-5-balance - ref
+2024-11-16 18:48:27,747 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-5-balance - ref - speed
+2024-11-16 18:48:27,747 Implementation INFO: Building cross-sha3-r-sdpg-5-balance - ref - speed
+2024-11-16 18:48:35,773 Implementation DEBUG: make stdout output:
+CC      elf/mupq_crypto_sign_cross-sha3-r-sdpg-5-balance_ref_speed.elf
+  OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-5-balance_ref_speed.hex
+2024-11-16 18:48:40,083 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-16 18:48:46,058 BoardTestCase INFO: Benchmarking cross-sha3-r-sdp-1-balance - ref
+2024-11-16 18:48:46,059 BoardTestCase INFO: Runnning cross-sha3-r-sdp-1-balance - ref - speed
+2024-11-16 18:48:46,059 Implementation INFO: Building cross-sha3-r-sdp-1-balance - ref - speed
+2024-11-16 18:48:52,755 Implementation DEBUG: make stdout output:
+CC      elf/mupq_crypto_sign_cross-sha3-r-sdp-1-balance_ref_speed.elf
+  OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdp-1-balance_ref_speed.hex
+2024-11-16 18:48:56,852 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-16 18:48:59,741 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-3-balance - ref
+2024-11-16 18:48:59,742 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-3-balance - ref - speed
+2024-11-16 18:48:59,742 Implementation INFO: Building cross-sha3-r-sdpg-3-balance - ref - speed
+2024-11-16 18:49:06,690 Implementation DEBUG: make stdout output:
+CC      elf/mupq_crypto_sign_cross-sha3-r-sdpg-3-balance_ref_speed.elf
+  OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-3-balance_ref_speed.hex
+2024-11-16 18:49:10,997 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-16 18:49:13,938 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-1-balance - ref
+2024-11-16 18:49:13,938 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-1-balance - ref - speed
+2024-11-16 18:49:13,939 Implementation INFO: Building cross-sha3-r-sdpg-1-balance - ref - speed
+2024-11-16 18:49:20,946 Implementation DEBUG: make stdout output:
+CC      elf/mupq_crypto_sign_cross-sha3-r-sdpg-1-balance_ref_speed.elf
+  OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-1-balance_ref_speed.hex
+2024-11-16 18:49:25,193 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-16 18:49:27,221 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-1-small - ref
+2024-11-16 18:49:27,221 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-1-small - ref - speed
+2024-11-16 18:49:27,222 Implementation INFO: Building cross-sha3-r-sdpg-1-small - ref - speed
+2024-11-16 18:49:34,288 Implementation DEBUG: make stdout output:
+CC      elf/mupq_crypto_sign_cross-sha3-r-sdpg-1-small_ref_speed.elf
+  OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-1-small_ref_speed.hex
+2024-11-16 18:49:38,506 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-16 18:49:45,605 BoardTestCase INFO: Benchmarking cross-sha3-r-sdp-3-balance - ref
+2024-11-16 18:49:45,605 BoardTestCase INFO: Runnning cross-sha3-r-sdp-3-balance - ref - hashing
+2024-11-16 18:49:45,606 Implementation INFO: Building cross-sha3-r-sdp-3-balance - ref - hashing
+2024-11-16 18:49:53,259 Implementation DEBUG: make stdout output:
+CC      elf/mupq_crypto_sign_cross-sha3-r-sdp-3-balance_ref_hashing.elf
+  OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdp-3-balance_ref_hashing.hex
+2024-11-16 18:49:57,415 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-16 18:50:04,359 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-5-balance - ref
+2024-11-16 18:50:04,359 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-5-balance - ref - hashing
+2024-11-16 18:50:04,359 Implementation INFO: Building cross-sha3-r-sdpg-5-balance - ref - hashing
+2024-11-16 18:50:12,144 Implementation DEBUG: make stdout output:
+CC      elf/mupq_crypto_sign_cross-sha3-r-sdpg-5-balance_ref_hashing.elf
+  OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-5-balance_ref_hashing.hex
+2024-11-16 18:50:16,400 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-16 18:50:22,459 BoardTestCase INFO: Benchmarking cross-sha3-r-sdp-1-balance - ref
+2024-11-16 18:50:22,459 BoardTestCase INFO: Runnning cross-sha3-r-sdp-1-balance - ref - hashing
+2024-11-16 18:50:22,460 Implementation INFO: Building cross-sha3-r-sdp-1-balance - ref - hashing
+2024-11-16 18:50:29,111 Implementation DEBUG: make stdout output:
+CC      elf/mupq_crypto_sign_cross-sha3-r-sdp-1-balance_ref_hashing.elf
+  OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdp-1-balance_ref_hashing.hex
+2024-11-16 18:50:33,153 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-16 18:50:36,123 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-3-balance - ref
+2024-11-16 18:50:36,123 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-3-balance - ref - hashing
+2024-11-16 18:50:36,123 Implementation INFO: Building cross-sha3-r-sdpg-3-balance - ref - hashing
+2024-11-16 18:50:43,083 Implementation DEBUG: make stdout output:
+CC      elf/mupq_crypto_sign_cross-sha3-r-sdpg-3-balance_ref_hashing.elf
+  OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-3-balance_ref_hashing.hex
+2024-11-16 18:50:47,257 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-16 18:50:50,279 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-1-balance - ref
+2024-11-16 18:50:50,279 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-1-balance - ref - hashing
+2024-11-16 18:50:50,279 Implementation INFO: Building cross-sha3-r-sdpg-1-balance - ref - hashing
+2024-11-16 18:50:57,228 Implementation DEBUG: make stdout output:
+CC      elf/mupq_crypto_sign_cross-sha3-r-sdpg-1-balance_ref_hashing.elf
+  OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-1-balance_ref_hashing.hex
+2024-11-16 18:51:01,641 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-16 18:51:03,740 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-1-small - ref
+2024-11-16 18:51:03,740 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-1-small - ref - hashing
+2024-11-16 18:51:03,740 Implementation INFO: Building cross-sha3-r-sdpg-1-small - ref - hashing
+2024-11-16 18:51:11,673 Implementation DEBUG: make stdout output:
+CC      elf/mupq_crypto_sign_cross-sha3-r-sdpg-1-small_ref_hashing.elf
+  OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-1-small_ref_hashing.hex
+2024-11-16 18:51:15,919 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-16 18:51:23,225 BoardTestCase INFO: Measuring cross-sha3-r-sdp-3-balance - ref
+2024-11-16 18:51:23,225 Implementation INFO: Building cross-sha3-r-sdp-3-balance - ref library
+2024-11-16 18:51:27,699 Implementation DEBUG: make stdout output:
+CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-3-balance/ref/aes256.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-3-balance/ref/aes256_ctr_drbg.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-3-balance/ref/CROSS.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-3-balance/ref/csprng_hash.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-3-balance/ref/merkle.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-3-balance/ref/pack_unpack.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-3-balance/ref/seedtree.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-3-balance/ref/sha2.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-3-balance/ref/sign.c.o
+  AR      obj/libmupq_crypto_sign_cross-sha3-r-sdp-3-balance_ref.a
+2024-11-16 18:51:27,710 BoardTestCase INFO: Measuring cross-sha3-r-sdpg-5-balance - ref
+2024-11-16 18:51:27,711 Implementation INFO: Building cross-sha3-r-sdpg-5-balance - ref library
+2024-11-16 18:51:32,792 Implementation DEBUG: make stdout output:
+CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-5-balance/ref/aes256.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-5-balance/ref/aes256_ctr_drbg.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-5-balance/ref/CROSS.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-5-balance/ref/csprng_hash.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-5-balance/ref/merkle.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-5-balance/ref/pack_unpack.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-5-balance/ref/seedtree.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-5-balance/ref/sha2.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-5-balance/ref/sign.c.o
+  AR      obj/libmupq_crypto_sign_cross-sha3-r-sdpg-5-balance_ref.a
+2024-11-16 18:51:32,802 BoardTestCase INFO: Measuring cross-sha3-r-sdp-1-balance - ref
+2024-11-16 18:51:32,802 Implementation INFO: Building cross-sha3-r-sdp-1-balance - ref library
+2024-11-16 18:51:37,421 Implementation DEBUG: make stdout output:
+CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-1-balance/ref/aes256.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-1-balance/ref/aes256_ctr_drbg.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-1-balance/ref/CROSS.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-1-balance/ref/csprng_hash.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-1-balance/ref/merkle.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-1-balance/ref/pack_unpack.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-1-balance/ref/seedtree.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-1-balance/ref/sha2.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-1-balance/ref/sign.c.o
+  AR      obj/libmupq_crypto_sign_cross-sha3-r-sdp-1-balance_ref.a
+2024-11-16 18:51:37,430 BoardTestCase INFO: Measuring cross-sha3-r-sdpg-3-balance - ref
+2024-11-16 18:51:37,431 Implementation INFO: Building cross-sha3-r-sdpg-3-balance - ref library
+2024-11-16 18:51:43,321 Implementation DEBUG: make stdout output:
+CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-3-balance/ref/aes256.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-3-balance/ref/aes256_ctr_drbg.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-3-balance/ref/CROSS.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-3-balance/ref/csprng_hash.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-3-balance/ref/merkle.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-3-balance/ref/pack_unpack.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-3-balance/ref/seedtree.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-3-balance/ref/sha2.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-3-balance/ref/sign.c.o
+  AR      obj/libmupq_crypto_sign_cross-sha3-r-sdpg-3-balance_ref.a
+2024-11-16 18:51:43,327 BoardTestCase INFO: Measuring cross-sha3-r-sdpg-1-balance - ref
+2024-11-16 18:51:43,327 Implementation INFO: Building cross-sha3-r-sdpg-1-balance - ref library
+2024-11-16 18:51:48,196 Implementation DEBUG: make stdout output:
+CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-balance/ref/aes256.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-balance/ref/aes256_ctr_drbg.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-balance/ref/CROSS.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-balance/ref/csprng_hash.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-balance/ref/merkle.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-balance/ref/pack_unpack.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-balance/ref/seedtree.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-balance/ref/sha2.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-balance/ref/sign.c.o
+  AR      obj/libmupq_crypto_sign_cross-sha3-r-sdpg-1-balance_ref.a
+2024-11-16 18:51:48,203 BoardTestCase INFO: Measuring cross-sha3-r-sdpg-1-small - ref
+2024-11-16 18:51:48,203 Implementation INFO: Building cross-sha3-r-sdpg-1-small - ref library
+2024-11-16 18:51:53,155 Implementation DEBUG: make stdout output:
+CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-small/ref/aes256.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-small/ref/aes256_ctr_drbg.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-small/ref/CROSS.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-small/ref/csprng_hash.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-small/ref/merkle.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-small/ref/pack_unpack.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-small/ref/seedtree.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-small/ref/sha2.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-small/ref/sign.c.o
+  AR      obj/libmupq_crypto_sign_cross-sha3-r-sdpg-1-small_ref.a

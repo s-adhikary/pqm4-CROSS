@@ -1,0 +1,117 @@
+2024-11-16 20:01:34,756 BoardTestCase INFO: Benchmarking cross-sha3-r-sdp-3-balance - ref
+2024-11-16 20:01:34,756 BoardTestCase INFO: Runnning cross-sha3-r-sdp-3-balance - ref - stack
+2024-11-16 20:01:34,757 Implementation INFO: Building cross-sha3-r-sdp-3-balance - ref - stack
+2024-11-16 20:01:48,757 Implementation ERROR: make stdout output:
+GEN     obj/.config.mk
+make -C /home/puja/Videos/pqm4-CROSS-24October24Main_Hash_reuse_recompute_merkle_countermeasure/libopencm3 lib/stm32/l4
+make[1]: Entering directory '/home/puja/Videos/pqm4-CROSS-24October24Main_Hash_reuse_recompute_merkle_countermeasure/libopencm3'
+  GENHDR  stm32/f0
+  GENHDR  stm32/f1
+  GENHDR  stm32/f2
+  GENHDR  stm32/f3
+  GENHDR  stm32/f4
+  GENHDR  stm32/f7
+  GENHDR  stm32/l0
+  GENHDR  stm32/l1
+  GENHDR  stm32/l4
+  GENHDR  stm32/g0
+  GENHDR  stm32/g4
+  GENHDR  stm32/h7
+  GENHDR  gd32/f1x0
+  GENHDR  lpc13xx
+  GENHDR  lpc17xx
+  GENHDR  lpc43xx/m4
+  GENHDR  lpc43xx/m0
+  GENHDR  lm3s
+  GENHDR  msp432/e4
+  GENHDR  efm32/tg
+  GENHDR  efm32/g
+  GENHDR  efm32/lg
+  GENHDR  efm32/gg
+  GENHDR  efm32/hg
+  GENHDR  efm32/wg
+  GENHDR  efm32/ezr32wg
+  GENHDR  nrf/51
+  GENHDR  nrf/52
+  GENHDR  sam/3a
+  GENHDR  sam/3n
+  GENHDR  sam/3s
+  GENHDR  sam/3u
+  GENHDR  sam/3x
+  GENHDR  sam/4l
+  GENHDR  sam/d
+  GENHDR  vf6xx
+  GENHDR  swm050
+  GENHDR  pac55xx
+  BUILD   lib/stm32/l4
+  CC      adc.c
+  CC      adc_common_v2.c
+  CC      adc_common_v2_multi.c
+  CC      can.c
+  CC      crc_common_all.c
+  CC      crc_v2.c
+  CC      crs_common_all.c
+  CC      dac_common_all.c
+  CC      dac_common_v1.c
+  CC      dma_common_l1f013.c
+  CC      dma_common_csel.c
+  CC      exti_common_all.c
+  CC      flash.c
+  CC      flash_common_all.c
+  CC      flash_common_f.c
+  CC      flash_common_idcache.c
+  CC      gpio_common_all.c
+  CC      gpio_common_f0234.c
+  CC      i2c_common_v2.c
+  CC      iwdg_common_all.c
+  CC      lptimer_common_all.c
+  CC      pwr.c
+  CC      rcc.c
+  CC      rcc_common_all.c
+  CC      rng_common_v1.c
+  CC      rtc_common_l1f024.c
+  CC      spi_common_all.c
+  CC      spi_common_v2.c
+  CC      timer_common_all.c
+  CC      usart_common_all.c
+  CC      usart_common_v2.c
+  CC      quadspi_common_v1.c
+  CC      usb.c
+  CC      usb_control.c
+  CC      usb_standard.c
+  CC      usb_msc.c
+  CC      usb_hid.c
+  CC      usb_audio.c
+  CC      usb_cdc.c
+  CC      usb_midi.c
+  CC      st_usbfs_core.c
+  CC      st_usbfs_v2.c
+  CC      usb_dwc_common.c
+  CC      usb_f107.c
+  CC      vector.c
+  CC      systick.c
+  CC      scb.c
+  CC      nvic.c
+  CC      assert.c
+  CC      sync.c
+  CC      dwt.c
+  AR      libopencm3_stm32l4.a
+make[1]: Leaving directory '/home/puja/Videos/pqm4-CROSS-24October24Main_Hash_reuse_recompute_merkle_countermeasure/libopencm3'
+  CC      elf/mupq_crypto_sign_cross-sha3-r-sdp-3-balance_ref_stack.elf
+2024-11-16 20:01:48,758 Implementation ERROR: make return code 2
+2024-11-16 20:01:49,360 BoardTestCase ERROR: Running cross-sha3-r-sdp-3-balance - ref - stack failed with exception: Traceback (most recent call last):
+
+  File "/home/puja/Videos/pqm4-CROSS-24October24Main_Hash_reuse_recompute_merkle_countermeasure/mupq/mupq.py", line 239, in run_test
+    output = self.interface.run(binary, self.iterations)
+
+  File "/home/puja/Videos/pqm4-CROSS-24October24Main_Hash_reuse_recompute_merkle_countermeasure/mupq/platforms.py", line 98, in run
+    self.flash(binary_path)
+
+  File "/home/puja/Videos/pqm4-CROSS-24October24Main_Hash_reuse_recompute_merkle_countermeasure/mupq/platforms.py", line 132, in flash
+    subprocess.check_call(
+
+  File "/usr/lib/python3.10/subprocess.py", line 369, in check_call
+    raise CalledProcessError(retcode, cmd)
+
+subprocess.CalledProcessError: Command '['openocd', '-f', 'st_nucleo_l4r5.cfg', '-c', 'program bin/mupq_crypto_sign_cross-sha3-r-sdp-3-balance_ref_stack.hex verify reset exit']' returned non-zero exit status 1.
+

@@ -1,0 +1,72 @@
+# Speed Evaluation
+## Key Encapsulation Schemes
+| scheme | implementation | key generation [cycles] | encapsulation [cycles] | decapsulation [cycles] |
+| ------ | -------------- | ----------------------- | ---------------------- | ---------------------- |
+## Signature Schemes
+| scheme | implementation | key generation [cycles] | sign [cycles] | verify [cycles] |
+| ------ | -------------- | ----------------------- | ------------- | --------------- |
+| cross-sha3-r-sdp-1-balance (1 executions) | ref | AVG: 389,933 <br /> MIN: 389,933 <br /> MAX: 389,933 | AVG: 38,948,762 <br /> MIN: 38,948,762 <br /> MAX: 38,948,762 | AVG: 18,228,525 <br /> MIN: 18,228,525 <br /> MAX: 18,228,525 |
+| cross-sha3-r-sdp-1-fast (1 executions) | ref | AVG: 389,933 <br /> MIN: 389,933 <br /> MAX: 389,933 | AVG: 22,492,071 <br /> MIN: 22,492,071 <br /> MAX: 22,492,071 | AVG: 12,029,877 <br /> MIN: 12,029,877 <br /> MAX: 12,029,877 |
+| cross-sha3-r-sdp-3-balance (1 executions) | ref | AVG: 927,049 <br /> MIN: 927,049 <br /> MAX: 927,049 | AVG: 97,273,582 <br /> MIN: 97,273,582 <br /> MAX: 97,273,582 | AVG: 38,091,034 <br /> MIN: 38,091,034 <br /> MAX: 38,091,034 |
+| cross-sha3-r-sdp-3-fast (1 executions) | ref | AVG: 927,056 <br /> MIN: 927,056 <br /> MAX: 927,056 | AVG: 61,757,083 <br /> MIN: 61,757,083 <br /> MAX: 61,757,083 | AVG: 32,341,211 <br /> MIN: 32,341,211 <br /> MAX: 32,341,211 |
+| cross-sha3-r-sdpg-1-balance (1 executions) | ref | AVG: 187,289 <br /> MIN: 187,289 <br /> MAX: 187,289 | AVG: 25,106,927 <br /> MIN: 25,106,927 <br /> MAX: 25,106,927 | AVG: 14,961,328 <br /> MIN: 14,961,328 <br /> MAX: 14,961,328 |
+| cross-sha3-r-sdpg-1-fast (1 executions) | ref | AVG: 187,287 <br /> MIN: 187,287 <br /> MAX: 187,287 | AVG: 13,541,759 <br /> MIN: 13,541,759 <br /> MAX: 13,541,759 | AVG: 7,959,954 <br /> MIN: 7,959,954 <br /> MAX: 7,959,954 |
+| cross-sha3-r-sdpg-1-small (1 executions) | ref | AVG: 187,288 <br /> MIN: 187,288 <br /> MAX: 187,288 | AVG: 87,899,011 <br /> MIN: 87,899,011 <br /> MAX: 87,899,011 | AVG: 53,543,044 <br /> MIN: 53,543,044 <br /> MAX: 53,543,044 |
+| cross-sha3-r-sdpg-3-balance (1 executions) | ref | AVG: 394,511 <br /> MIN: 394,511 <br /> MAX: 394,511 | AVG: 36,302,642 <br /> MIN: 36,302,642 <br /> MAX: 36,302,642 | AVG: 22,088,097 <br /> MIN: 22,088,097 <br /> MAX: 22,088,097 |
+| cross-sha3-r-sdpg-3-fast (1 executions) | ref | AVG: 394,507 <br /> MIN: 394,507 <br /> MAX: 394,507 | AVG: 29,013,649 <br /> MIN: 29,013,649 <br /> MAX: 29,013,649 | AVG: 18,349,926 <br /> MIN: 18,349,926 <br /> MAX: 18,349,926 |
+| cross-sha3-r-sdpg-5-balance (1 executions) | ref | AVG: 669,993 <br /> MIN: 669,993 <br /> MAX: 669,993 | AVG: 73,592,221 <br /> MIN: 73,592,221 <br /> MAX: 73,592,221 | AVG: 45,260,278 <br /> MIN: 45,260,278 <br /> MAX: 45,260,278 |
+| cross-sha3-r-sdpg-5-fast (1 executions) | ref | AVG: 669,999 <br /> MIN: 669,999 <br /> MAX: 669,999 | AVG: 58,836,504 <br /> MIN: 58,836,504 <br /> MAX: 58,836,504 | AVG: 38,169,122 <br /> MIN: 38,169,122 <br /> MAX: 38,169,122 |
+# Memory Evaluation
+## Key Encapsulation Schemes
+| Scheme | Implementation | Key Generation [bytes] | Encapsulation [bytes] | Decapsulation [bytes] |
+| ------ | -------------- | ---------------------- | --------------------- | --------------------- |
+## Signature Schemes
+| Scheme | Implementation | Key Generation [bytes] | Sign [bytes] | Verify [bytes] |
+| ------ | -------------- | ---------------------- | ------------ | -------------- |
+| cross-sha3-r-sdp-1-balance | ref | 7,984 | 106,528 | 41,236 |
+| cross-sha3-r-sdp-1-fast | ref | 7,984 | 59,136 | 15,220 |
+| cross-sha3-r-sdp-3-balance | ref | 16,616 | 245,032 | 91,716 |
+| cross-sha3-r-sdp-3-fast | ref | 16,616 | 158,024 | 61,100 |
+| cross-sha3-r-sdpg-1-balance | ref | 3,920 | 83,784 | 38,252 |
+| cross-sha3-r-sdpg-1-fast | ref | 3,920 | 42,408 | 13,344 |
+| cross-sha3-r-sdpg-1-small | ref | 3,920 | 287,668 | 124,316 |
+| cross-sha3-r-sdpg-3-balance | ref | 7,336 | 129,752 | 58,988 |
+| cross-sha3-r-sdpg-3-fast | ref | 7,336 | 90,144 | 26,528 |
+| cross-sha3-r-sdpg-5-balance | ref | 11,312 | 236,712 | 105,924 |
+| cross-sha3-r-sdpg-5-fast | ref | 11,312 | 156,096 | 42,076 |
+# Hashing Evaluation
+## Key Encapsulation Schemes
+| Scheme | Implementation | Key Generation [%] | Encapsulation [%] | Decapsulation [%] |
+| ------ | -------------- | ------------------ | ----------------- | ----------------- |
+## Signature Schemes
+| Scheme | Implementation | Key Generation [%] | Sign [%] | Verify [%] |
+| ------ | -------------- | ------------------ | -------- | ---------- |
+| cross-sha3-r-sdp-1-balance | ref | 66.8% | 51.3% | 71.3% |
+| cross-sha3-r-sdp-1-fast | ref | 66.8% | 47.2% | 49.6% |
+| cross-sha3-r-sdp-3-balance | ref | 67.0% | 40.6% | 64.0% |
+| cross-sha3-r-sdp-3-fast | ref | 67.0% | 41.2% | 46.6% |
+| cross-sha3-r-sdpg-1-balance | ref | 69.3% | 62.3% | 62.8% |
+| cross-sha3-r-sdpg-1-fast | ref | 69.3% | 56.7% | 51.8% |
+| cross-sha3-r-sdpg-1-small | ref | 69.3% | 61.9% | 64.6% |
+| cross-sha3-r-sdpg-3-balance | ref | 70.9% | 51.5% | 50.0% |
+| cross-sha3-r-sdpg-3-fast | ref | 70.9% | 46.2% | 42.8% |
+| cross-sha3-r-sdpg-5-balance | ref | 69.2% | 48.1% | 46.1% |
+| cross-sha3-r-sdpg-5-fast | ref | 69.2% | 44.5% | 40.1% |
+# Size Evaluation
+## Key Encapsulation Schemes
+| Scheme | Implementation | .text [bytes] | .data [bytes] | .bss [bytes] | Total [bytes] |
+| ------ | -------------- | ------------- | ------------- | ------------ | ------------- |
+## Signature Schemes
+| Scheme | Implementation | .text [bytes] | .data [bytes] | .bss [bytes] | Total [bytes] |
+| ------ | -------------- | ------------- | ------------- | ------------ | ------------- |
+| cross-sha3-r-sdp-1-balance | ref | 48,304 | 0 | 208 | 48,512 |
+| cross-sha3-r-sdp-1-fast | ref | 47,392 | 0 | 208 | 47,600 |
+| cross-sha3-r-sdp-3-balance | ref | 48,232 | 0 | 208 | 48,440 |
+| cross-sha3-r-sdp-3-fast | ref | 48,012 | 0 | 208 | 48,220 |
+| cross-sha3-r-sdpg-1-balance | ref | 52,536 | 0 | 208 | 52,744 |
+| cross-sha3-r-sdpg-1-fast | ref | 51,548 | 0 | 208 | 51,756 |
+| cross-sha3-r-sdpg-1-small | ref | 53,172 | 0 | 208 | 53,380 |
+| cross-sha3-r-sdpg-3-balance | ref | 50,860 | 0 | 208 | 51,068 |
+| cross-sha3-r-sdpg-3-fast | ref | 50,200 | 0 | 208 | 50,408 |
+| cross-sha3-r-sdpg-5-balance | ref | 53,276 | 0 | 208 | 53,484 |
+

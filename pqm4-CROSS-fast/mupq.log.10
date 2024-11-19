@@ -1,0 +1,155 @@
+2024-11-17 02:36:51,959 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-3-fast - ref
+2024-11-17 02:36:51,961 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-3-fast - ref - stack
+2024-11-17 02:36:51,962 Implementation INFO: Building cross-sha3-r-sdpg-3-fast - ref - stack
+2024-11-17 02:36:52,293 Implementation DEBUG: make stdout output:
+OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-3-fast_ref_stack.hex
+2024-11-17 02:36:56,228 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-17 02:36:56,993 BoardTestCase INFO: Benchmarking cross-sha3-r-sdp-3-fast - ref
+2024-11-17 02:36:56,993 BoardTestCase INFO: Runnning cross-sha3-r-sdp-3-fast - ref - stack
+2024-11-17 02:36:56,995 Implementation INFO: Building cross-sha3-r-sdp-3-fast - ref - stack
+2024-11-17 02:36:57,325 Implementation DEBUG: make stdout output:
+OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdp-3-fast_ref_stack.hex
+2024-11-17 02:37:00,859 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-17 02:37:02,265 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-5-fast - ref
+2024-11-17 02:37:02,266 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-5-fast - ref - stack
+2024-11-17 02:37:02,267 Implementation INFO: Building cross-sha3-r-sdpg-5-fast - ref - stack
+2024-11-17 02:37:02,610 Implementation DEBUG: make stdout output:
+OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-5-fast_ref_stack.hex
+2024-11-17 02:37:06,222 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-17 02:37:07,675 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-1-fast - ref
+2024-11-17 02:37:07,676 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-1-fast - ref - stack
+2024-11-17 02:37:07,676 Implementation INFO: Building cross-sha3-r-sdpg-1-fast - ref - stack
+2024-11-17 02:37:07,978 Implementation DEBUG: make stdout output:
+OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-1-fast_ref_stack.hex
+2024-11-17 02:37:11,495 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-17 02:37:11,916 BoardTestCase INFO: Benchmarking cross-sha3-r-sdp-1-fast - ref
+2024-11-17 02:37:11,916 BoardTestCase INFO: Runnning cross-sha3-r-sdp-1-fast - ref - stack
+2024-11-17 02:37:11,917 Implementation INFO: Building cross-sha3-r-sdp-1-fast - ref - stack
+2024-11-17 02:37:12,233 Implementation DEBUG: make stdout output:
+OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdp-1-fast_ref_stack.hex
+2024-11-17 02:37:15,654 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-17 02:37:16,253 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-3-fast - ref
+2024-11-17 02:37:16,253 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-3-fast - ref - speed
+2024-11-17 02:37:16,254 Implementation INFO: Building cross-sha3-r-sdpg-3-fast - ref - speed
+2024-11-17 02:37:16,601 Implementation DEBUG: make stdout output:
+OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-3-fast_ref_speed.hex
+2024-11-17 02:37:20,776 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-17 02:37:23,190 BoardTestCase INFO: Benchmarking cross-sha3-r-sdp-3-fast - ref
+2024-11-17 02:37:23,191 BoardTestCase INFO: Runnning cross-sha3-r-sdp-3-fast - ref - speed
+2024-11-17 02:37:23,191 Implementation INFO: Building cross-sha3-r-sdp-3-fast - ref - speed
+2024-11-17 02:37:23,547 Implementation DEBUG: make stdout output:
+OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdp-3-fast_ref_speed.hex
+2024-11-17 02:37:27,703 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-17 02:37:32,476 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-5-fast - ref
+2024-11-17 02:37:32,477 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-5-fast - ref - speed
+2024-11-17 02:37:32,478 Implementation INFO: Building cross-sha3-r-sdpg-5-fast - ref - speed
+2024-11-17 02:37:32,863 Implementation DEBUG: make stdout output:
+OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-5-fast_ref_speed.hex
+2024-11-17 02:37:37,114 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-17 02:37:42,024 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-1-fast - ref
+2024-11-17 02:37:42,025 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-1-fast - ref - speed
+2024-11-17 02:37:42,025 Implementation INFO: Building cross-sha3-r-sdpg-1-fast - ref - speed
+2024-11-17 02:37:42,328 Implementation DEBUG: make stdout output:
+OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-1-fast_ref_speed.hex
+2024-11-17 02:37:46,473 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-17 02:37:47,580 BoardTestCase INFO: Benchmarking cross-sha3-r-sdp-1-fast - ref
+2024-11-17 02:37:47,581 BoardTestCase INFO: Runnning cross-sha3-r-sdp-1-fast - ref - speed
+2024-11-17 02:37:47,581 Implementation INFO: Building cross-sha3-r-sdp-1-fast - ref - speed
+2024-11-17 02:37:47,875 Implementation DEBUG: make stdout output:
+OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdp-1-fast_ref_speed.hex
+2024-11-17 02:37:51,962 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-17 02:37:53,737 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-3-fast - ref
+2024-11-17 02:37:53,739 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-3-fast - ref - hashing
+2024-11-17 02:37:53,740 Implementation INFO: Building cross-sha3-r-sdpg-3-fast - ref - hashing
+2024-11-17 02:37:54,088 Implementation DEBUG: make stdout output:
+OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-3-fast_ref_hashing.hex
+2024-11-17 02:37:58,261 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-17 02:38:00,744 BoardTestCase INFO: Benchmarking cross-sha3-r-sdp-3-fast - ref
+2024-11-17 02:38:00,745 BoardTestCase INFO: Runnning cross-sha3-r-sdp-3-fast - ref - hashing
+2024-11-17 02:38:00,745 Implementation INFO: Building cross-sha3-r-sdp-3-fast - ref - hashing
+2024-11-17 02:38:01,111 Implementation DEBUG: make stdout output:
+OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdp-3-fast_ref_hashing.hex
+2024-11-17 02:38:05,263 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-17 02:38:10,067 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-5-fast - ref
+2024-11-17 02:38:10,068 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-5-fast - ref - hashing
+2024-11-17 02:38:10,069 Implementation INFO: Building cross-sha3-r-sdpg-5-fast - ref - hashing
+2024-11-17 02:38:10,455 Implementation DEBUG: make stdout output:
+OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-5-fast_ref_hashing.hex
+2024-11-17 02:38:14,738 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-17 02:38:19,733 BoardTestCase INFO: Benchmarking cross-sha3-r-sdpg-1-fast - ref
+2024-11-17 02:38:19,734 BoardTestCase INFO: Runnning cross-sha3-r-sdpg-1-fast - ref - hashing
+2024-11-17 02:38:19,734 Implementation INFO: Building cross-sha3-r-sdpg-1-fast - ref - hashing
+2024-11-17 02:38:20,158 Implementation DEBUG: make stdout output:
+OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdpg-1-fast_ref_hashing.hex
+2024-11-17 02:38:24,355 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-17 02:38:25,503 BoardTestCase INFO: Benchmarking cross-sha3-r-sdp-1-fast - ref
+2024-11-17 02:38:25,503 BoardTestCase INFO: Runnning cross-sha3-r-sdp-1-fast - ref - hashing
+2024-11-17 02:38:25,504 Implementation INFO: Building cross-sha3-r-sdp-1-fast - ref - hashing
+2024-11-17 02:38:25,947 Implementation DEBUG: make stdout output:
+OBJCOPY bin/mupq_crypto_sign_cross-sha3-r-sdp-1-fast_ref_hashing.hex
+2024-11-17 02:38:29,945 Platform DEBUG: Found start pattern: b'=========================\n'
+2024-11-17 02:38:31,756 BoardTestCase INFO: Measuring cross-sha3-r-sdpg-3-fast - ref
+2024-11-17 02:38:31,756 Implementation INFO: Building cross-sha3-r-sdpg-3-fast - ref library
+2024-11-17 02:38:36,376 Implementation DEBUG: make stdout output:
+CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-3-fast/ref/aes256.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-3-fast/ref/aes256_ctr_drbg.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-3-fast/ref/CROSS.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-3-fast/ref/csprng_hash.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-3-fast/ref/merkle.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-3-fast/ref/pack_unpack.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-3-fast/ref/seedtree.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-3-fast/ref/sha2.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-3-fast/ref/sign.c.o
+  AR      obj/libmupq_crypto_sign_cross-sha3-r-sdpg-3-fast_ref.a
+2024-11-17 02:38:36,457 BoardTestCase INFO: Measuring cross-sha3-r-sdp-3-fast - ref
+2024-11-17 02:38:36,457 Implementation INFO: Building cross-sha3-r-sdp-3-fast - ref library
+2024-11-17 02:38:40,644 Implementation DEBUG: make stdout output:
+CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-3-fast/ref/aes256.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-3-fast/ref/aes256_ctr_drbg.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-3-fast/ref/CROSS.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-3-fast/ref/csprng_hash.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-3-fast/ref/merkle.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-3-fast/ref/pack_unpack.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-3-fast/ref/seedtree.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-3-fast/ref/sha2.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-3-fast/ref/sign.c.o
+  AR      obj/libmupq_crypto_sign_cross-sha3-r-sdp-3-fast_ref.a
+2024-11-17 02:38:40,653 BoardTestCase INFO: Measuring cross-sha3-r-sdpg-5-fast - ref
+2024-11-17 02:38:40,653 Implementation INFO: Building cross-sha3-r-sdpg-5-fast - ref library
+2024-11-17 02:38:45,451 Implementation DEBUG: make stdout output:
+CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-5-fast/ref/aes256.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-5-fast/ref/aes256_ctr_drbg.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-5-fast/ref/CROSS.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-5-fast/ref/csprng_hash.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-5-fast/ref/merkle.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-5-fast/ref/pack_unpack.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-5-fast/ref/seedtree.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-5-fast/ref/sha2.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-5-fast/ref/sign.c.o
+  AR      obj/libmupq_crypto_sign_cross-sha3-r-sdpg-5-fast_ref.a
+2024-11-17 02:38:45,458 BoardTestCase INFO: Measuring cross-sha3-r-sdpg-1-fast - ref
+2024-11-17 02:38:45,458 Implementation INFO: Building cross-sha3-r-sdpg-1-fast - ref library
+2024-11-17 02:38:50,130 Implementation DEBUG: make stdout output:
+CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-fast/ref/aes256.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-fast/ref/aes256_ctr_drbg.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-fast/ref/CROSS.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-fast/ref/csprng_hash.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-fast/ref/merkle.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-fast/ref/pack_unpack.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-fast/ref/seedtree.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-fast/ref/sha2.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdpg-1-fast/ref/sign.c.o
+  AR      obj/libmupq_crypto_sign_cross-sha3-r-sdpg-1-fast_ref.a
+2024-11-17 02:38:50,136 BoardTestCase INFO: Measuring cross-sha3-r-sdp-1-fast - ref
+2024-11-17 02:38:50,136 Implementation INFO: Building cross-sha3-r-sdp-1-fast - ref library
+2024-11-17 02:38:53,938 Implementation DEBUG: make stdout output:
+CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-1-fast/ref/aes256.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-1-fast/ref/aes256_ctr_drbg.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-1-fast/ref/CROSS.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-1-fast/ref/csprng_hash.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-1-fast/ref/merkle.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-1-fast/ref/pack_unpack.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-1-fast/ref/seedtree.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-1-fast/ref/sha2.c.o
+  CC      obj/mupq/crypto_sign/cross-sha3-r-sdp-1-fast/ref/sign.c.o
+  AR      obj/libmupq_crypto_sign_cross-sha3-r-sdp-1-fast_ref.a
