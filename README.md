@@ -12,36 +12,20 @@ All the `fast` (or `balance` and `small`) parameters of CROSS can be run using t
 
 Enter in the folder "pqm4-CROSS-fast" (or pqm4-CROSS-balanced-small) 
 
-```c 
-
-		cd pqm4-CROSS-fast (or cd pqm4-CROSS-balanced-small) 
-
-		``` 
+```
+cd pqm4-CROSS-fast (or cd pqm4-CROSS-balanced-small) 
+``` 
 
 Compile the codes 
 
-```c 
-
-		sudo make clean  
-
-		``` 
-
-```c 
-
-		sudo make -j4 PLATFORM=nucleo-l4r5zi 
-
-		``` 
+```
+sudo make clean
+sudo make -j4 PLATFORM=nucleo-l4r5zi 
+``` 
 
 Benchmark on the NUCLEO-L4R5ZI board 
 
-```c 
-
-		sudo python3 benchmarks.py --platform nucleo-l4r5zi 
-
-		``` 
-
-```c 
-
-		sudo python3 convert_benchmarks.py md 
-
-		``` 
+```
+sudo python3 benchmarks.py --platform nucleo-l4r5zi 
+sudo python3 convert_benchmarks.py md 
+``` 
