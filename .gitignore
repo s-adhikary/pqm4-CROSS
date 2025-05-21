@@ -1,0 +1,7 @@
+venv
+*.log*
+__pycache__
+bin
+elf
+obj
+obj-host
